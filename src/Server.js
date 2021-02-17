@@ -47,7 +47,11 @@ class Server {
   }
 
   initLogger() {
-    morganBody(this.app);
+    const { nodeEnv } = this.config;
+
+    if (nodeEnv !== 'test') {
+      morganBody(this.app);
+    }
   }
 
   setupRoutes() {
