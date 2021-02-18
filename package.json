@@ -19,7 +19,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.16",
     "morgan-body": "^2.6.5",
-    "sha1": "^1.1.1"
+    "sha1": "^1.1.1",
+    "swagger-jsdoc": "^7.0.0-rc.2",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
