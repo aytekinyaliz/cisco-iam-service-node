@@ -7,7 +7,7 @@
   npm install
   npm run start
 ```
-The application will run on http://localhost:3001
+The application will run on http://localhost:3001 and will connect to Atlas Mongo DB.
 
 To run the tests, run the following commands in a terminal:
 ```
