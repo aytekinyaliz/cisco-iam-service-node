@@ -4,7 +4,7 @@ const authControllerInstance = require('./AuthController');
 const router = Router();
 
 router
-  .route("/token")
+  .route("/login")
   .post(
     // checkSchema(validations.list as any),
     // validationHandler(),
