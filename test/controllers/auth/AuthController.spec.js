@@ -72,19 +72,19 @@ describe('AuthController.spec.js', () => {
   });
 
 
-  it("should return 400 w/ empty user for /token", (done) => {
+  it("should return 422 w/ empty user for /login", (done) => {
     request
-       .post(`/api/auth/token`)
+       .post(`/api/auth/login`)
        .send()
        .end((err, res) => {
-          expect(res.status).toBe(StatusCode.BAD_REQUEST);
+          expect(res.status).toBe(StatusCode.UNPROCESSABLE);
           done();
        });
   });
 
-  it("should return 400 w/ wrong username for /token", (done) => {
+  it("should return 400 w/ wrong username for /login", (done) => {
     request
-       .post(`/api/auth/token`)
+       .post(`/api/auth/login`)
        .send(mockUsers.wrongUsername)
        .end((err, res) => {
           expect(res.status).toBe(StatusCode.BAD_REQUEST);
@@ -92,9 +92,9 @@ describe('AuthController.spec.js', () => {
        });
   });
 
-  it("should return 400 w/ wrong password for /token", (done) => {
+  it("should return 400 w/ wrong password for /login", (done) => {
     request
-       .post(`/api/auth/token`)
+       .post(`/api/auth/login`)
        .send(mockUsers.wrongPassword)
        .end((err, res) => {
           expect(res.status).toBe(StatusCode.BAD_REQUEST);
@@ -102,14 +102,42 @@ describe('AuthController.spec.js', () => {
        });
   });
 
-  it("should return 400 w/ wrong credentials for /token", (done) => {
+  it("should return 400 w/ wrong credentials for /login", (done) => {
     request
-       .post(`/api/auth/token`)
+       .post(`/api/auth/login`)
        .send(mockUsers.validUser)
        .end((err, res) => {
           expect(res.status).toBe(StatusCode.OK);
           expect(res.body.data).toHaveProperty('token');
           expect(res.body.data.token).toContain('.');
+          done();
+       });
+  });
+
+  it("should return 422 w/ invalid credentials for /login", (done) => {
+    request
+       .post(`/api/auth/login`)
+       .send(mockUsers.emptyUsernameAndPassword)
+       .end((err, res) => {
+          expect(res.status).toBe(StatusCode.UNPROCESSABLE);
+          expect(res.body).toHaveProperty('errors');
+          expect(res.body.errors.length).toBe(2);
+          done();
+       });
+  });
+
+  it("should return 422 w/ invalid credentials for /login", (done) => {
+    request
+       .post(`/api/auth/login`)
+       .send(mockUsers.invalidUsernameAndPassword)
+       .end((err, res) => {
+          expect(res.status).toBe(StatusCode.UNPROCESSABLE);
+          expect(res.body).toHaveProperty('errors');
+          expect(res.body.errors.length).toBe(2);
+          expect(res.body.errors[0]).toHaveProperty('msg');
+          expect(res.body.errors[0].msg).toBe('Username should be between 4 and 50 characters!');
+          expect(res.body.errors[1]).toHaveProperty('msg');
+          expect(res.body.errors[1].msg).toBe('Password should be between 4 and 50 characters!');
           done();
        });
   });

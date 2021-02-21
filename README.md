@@ -1,4 +1,4 @@
-# cisco-iam-service-node (Nodejs version)
+# cisco-iam-service (Nodejs version)
 
 - clone or download the repository on to your local machine
 - copy and paste `.env.example` file and rename it to `.env`

@@ -1,9 +1,11 @@
 
 const {
+  BadRequestResponse,
   NotFoundResponse,
-  InternalServerErrorResponse
+  InternalServerErrorResponse,
+  UnprocessableResponse
 } = require('../entities/responses');
-const { NotFoundError } = require('../entities/errors');
+const { NotFoundError, UnprocessableError } = require('../entities/errors');
 const StatusCode = require('../libs/StatusCode');
 
 module.exports = function errorHandler() {
@@ -15,7 +17,11 @@ module.exports = function errorHandler() {
       case NotFoundError.name:
         response = new NotFoundResponse(err.message);
         break;
+        case UnprocessableError.name:
+          response = new UnprocessableResponse(err.data, err.message);
+          break;
       default:
+        console.log(err);
         response = new InternalServerErrorResponse(err.data, err.isPublic ? err.message : StatusCode[err.status]);
         break;
     }

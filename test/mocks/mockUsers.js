@@ -14,5 +14,13 @@ module.exports = {
   emptyUsername: {
     'username': '',
     'password': 'password'
+  },
+  emptyUsernameAndPassword: {
+    'username': '',
+    'password': ''
+  },
+  invalidUsernameAndPassword: {
+    'username': 'ab',
+    'password': 'ab'
   }
 };
